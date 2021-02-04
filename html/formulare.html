@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+  <head>
+       <title>Semester Arbeit </title>
+	   <link rel="stylesheet" href="styles.css">
+				<script>
+
+function calendar() {
+
+	var monthNames= ['Januar','Februar','Maerz','Apr','Mai','Juni','Juli','Aaugust','Sep','Oct','Nov','Dec'];
+	var jours= ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
+	var monthDays= [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	var today= new Date();
+	var thisDay= today.getDate();
+	var year= today.getYear();
+	year <= 200 ? year += 1900 : null;
+
+	if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)){
+		monthDays[1] = 29;
+	}
+	var nDays= monthDays[today.getMonth()];
+	var firstDay= today;
+	firstDay.setDate(0);
+
+	firstDay.getDate() == 2 ? firstDay.setDate(0) : null;
+	
+	var startDay = firstDay.getDay();
+	
+	var tb= document.createElement('table');
+	
+	var tbr= tb.insertRow(-1);
+
+	var tbh= document.createElement("th");
+	tbh.setAttribute('colspan','7');
+	var tbhtxt= document.createTextNode(monthNames[today.getMonth()+1]+'.'+year);
+	tbh.appendChild(tbhtxt);
+
+	tbr.appendChild(tbh);
+
+	var tbr=tb.insertRow(-1);
+
+	for(var i=0 ;i<jours.length ; i++){
+
+		tbr.insertCell(-1).appendChild(document.createTextNode(jours[i]));
+	}
+
+	var tbr= document.createElement("tr");
+
+	var column= 0;
+
+	for (var i= 0; i < startDay; i++) {
+		tbr.insertCell(0);
+		column++;
+	}
+
+	for (var i = 1; i <= nDays; i++) {
+	
+		var tdd= tbr.insertCell(-1);
+
+		i == thisDay ? tdd.style.color="#FF0000" : null;
+
+		tdd.appendChild(document.createTextNode(i));
+
+		column++;
+		if (column == 7) {
+			tb.appendChild(tbr);
+			var tbr=document.createElement("tr");
+			column = 0;
+		}
+
+		i == nDays ? tb.appendChild(tbr) : null;
+
+	}
+	document.getElementById('contcalendar').appendChild(tb);
+}
+
+typeof window.addEventListener == 'undefined' ? window.attachEvent("onload",calendar) : addEventListener('load',calendar,false);
+</script>		
+
+<meta name="viewport" content="width=device-width"> 
+			<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+			
+			
+			
+			<script type="text/javascript"></script>	
+			<style type="text/css"></style>			
+					
+  </head>
+  <body>
+  <div id="weatherWidget" data-serviceid="59275d7708bb52.55613544" data-format="600x150" data-version="1.1" data-city="18228265" data-source="http://www.wetter24.de"><script src="http://www.wetter24.de/fileadmin/scripts/widget.js"></script></div>
+  <img class="irc_mi" src="http://medpro.fh-brandenburg.de/wp-content/uploads/2015/02/2013_11_06_FHB_Logo_RGB.png" onload="google.aft&amp;&amp;google.aft(this)" width="300" height="150" style="margin-top: 148px;" alt="Résultat de recherche d'images pour &quot;fh brandenburg&quot;">
+  <script type="text/javascript">
+		jQuery(document).ready(function($) {
+			var maLatitude;		/*Variable gobale contenant la latitude*/
+			var maLongitude;	/*Variable gobale contenant la longitude*/	
+		
+			if (navigator.geolocation)
+				navigator.geolocation.getCurrentPosition(showPosition);
+			else
+			alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+			});	
+			
+			function showPosition(position){
+				maLatitude= position.coords.latitude;
+				maLongitude= position.coords.longitude;	
+				alert(maLatitude + ", " + maLongitude );
+		}	
+	</script>
+		
+			<div style="text-align:center;width:400px;padding:1em 0;"> <h2><a style="text-decoration:none;" href="http://www.zeitverschiebung.net/de/timezone/europe--berlin"><span style="color:gray;">Aktuelle Uhrzeit / Ortszeit</span><br />Europe/Berlin</a></h2> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=de&timezone=Europe%2FBerlin"></iframe> <small style="color:gray;">&copy; <a href="http://www.zeitzonenrechner.net/" style="color: gray;">Zeitzonenrechner</a></small> </div>		
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script> // Dans la même balise script que la géolocalisation!
+		jQuery(document).ready(function($) {
+		  $.ajax({
+		  url : "http://api.wunderground.com/api/TA_KEY/geolookup/conditions/q/IA/Cedar_Rapids.json",
+		  dataType : "jsonp",
+		  success : function(parsed_json) {
+		  var location = parsed_json['location']['city'];
+		  var temp_f = parsed_json['current_observation']['temp_f'];
+		  //alert("Current temperature in " + location + " is: " + temp_f);
+		  }
+		  });
+		});
+	</script>
+  <div id='contcalendar'></div>
+   
+  
+    <form action="cgi-bin/test.cgi" method="post">
+	 <p> Geschlecht: <br />
+		<input type="radio" name="test" value=2.0  /> Weiblich
+		<input type="radio" name="test" value=1.0 checked /> Maennlich
+	 </p>
+	 
+	 
+	 <p> Vorname <br />
+		<input type="text" name="vn" value="PROBE">
+	 </p>
+	 
+	 <p> Nachname <br />
+		<input type="text" name="nn" value="Beispiel">
+	 </p>
+	 
+	 <p> email <br/> 
+    <input type="email" name="email" id="vorname" value ="FH_BRANDENBURG@th-brandenburg.de" maxlength="30" > 
+	
+
+   <p> password <br/>
+     <input type="password" name="Password" id="Password" value ="Erfolg braucht Mut" required maxlength="40" />
+        </p>
+	
+	<p> Land <br />
+       <select name="Land" id="<land">
+           
+			   <optgroup label="Afrika">
+               <option value="Elfenbeinkueste">Elfenbeinkueste</option>
+               <option value="Ägypten">aegypten</option>
+	           <option value="Algerien">Algerien</option>
+               <option value="Angola">Angola</option>
+               <option value="Äquatorialguinea">aequatorialguinea</option>
+               <option value="Benin">Benin</option>
+               <option value="Botswana">Botswana</option>
+               <option value="Burkina Faso">Burkina Faso</option>
+               <option value="Burundi">Burundi</option>
+               <option value="Ghana">Ghana</option>
+               <option value="Guinea-Bissau">Guinea-Bissau</option>
+               <option value="Kamerun">Kamerun</option>
+               <option value="Kongo, Demokratische Republik">Kongo, Demokratische Republik</option>
+               <option value="Nigeria">Nigeria</option>			   
+              <option value="Afrikanische Unin">Afrikanische Union	</option>
+		 </optgroup>
+           <optgroup label="Amerika">
+               <option value="kanada">kanada</option>
+               <option value="vereinigte staaten von amerika">vereinigte staaten von amerika</option>
+           </optgroup>
+           <optgroup label="Asie">
+               <option value="China">China</option>
+               <option value="japan">japan</option>
+			   <option value="Russland">Russland</option>
+         <optgroup label="Europa">
+               <option value="Deutschland">Deutschland</option>
+               <option value="Frankreich">Frankreich</option>
+               <option value="italien">Italien</option>
+               <option value="italien">Italien</option>
+               <option value="spanien">spanien</option>
+               <option value="polen">polen</option>
+               <option value="Rumänien">Rumänien</option>
+               <option value="Niederlande">Niederlande</option>
+               <option value="Griechenland">Griechenland</option>
+               <option value="Portugal">Portugal</option>
+               <option value="Tschechische Republik">Tschechische Republik</option>
+               <option value="ungarn">Ungarn</option>
+               <option value="Schweden">Schweden</option>
+               <option value="Österreich">Österreich</option>
+               <option value="Bulgarien">Bulgarien</option>
+               <option value="Dänemark">Dänemark</option>
+               <option value="Slowakei">Slowakei</option>
+               <option value="Finnland">Finnland</option>
+               <option value="Irland">Irland</option>
+               <option value="Litauen">Litauen</option>
+               <option value="Lettland">Lettland</option>
+               <option value="Slowenien">Slowenien</option>
+               <option value="Estland">Estland</option>
+               <option value="Zypern">Zypern</option>
+               <option value="Luxemburg">Luxemburg</option>
+			   <option value="Vereinigtes königreich">Vereinigtes Koenigreich</option>
+       </select>
+	   <p> Studiengaenge <br />
+	    <select name="Studiengaenge" id="<Studiengaenge">
+			   <optgroup label="Bachelor: Informatik und Medien">
+               <option value="Applied Computer Science">Applied Computer Science</option>
+               <option value="Informatik">Informatik</option>
+	           <option value="Medieninformatik (Onlinestudiengang)">Medieninformatik (Onlinestudiengang)</option>
+               <option value="Medizininformatik">Medizininformatik</option>
+		 </optgroup>
+           <optgroup label="Bachelor: Technik">
+               <option value="Augenoptik / Optische Gerätetechnik">Augenoptik / Optische Gerätetechnik</option>
+               <option value="Ingenieurwissenschaften">Ingenieurwissenschaften</option>
+<option value="Maschinenbau">Maschinenbau</option>
+<option value="Wirtschaftsingenieurwesen">Wirtschaftsingenieurwesen</option>          
+		  </optgroup>
+           <optgroup label="Bachelor Wirtschaft">
+               <option value="Berufsbegleitende Betriebswirtschaftslehre">Berufsbegleitende Betriebswirtschaftslehre</option>
+               <option value="Betriebswirtschaftslehre">Betriebswirtschaftslehre</option>
+			   <option value="Wirtschaftsinformatik">Wirtschaftsinformatik</option>
+ 			   <optgroup label="Master: Informatik und Medien">
+               <option value="Digitale Medien">Digitale Medien</option>
+               <option value="Informatik">Informatik</option>
+	           <option value="Medieninformatik (Onlinestudiengang)">Medieninformatik (Onlinestudiengang)</option>
+            
+		 </optgroup>
+           <optgroup label="Master: Technik">
+               <option value="Energieeffizienz Technischer Systeme">Energieeffizienz Technischer Systeme</option>
+               <option value="Maschinenbau">Maschinenbau</option>
+<option value="Photonik">Photonik</option>
+
+		  </optgroup>
+           <optgroup label="Master Wirtschaft">
+               <option value="Betriebswirtschaftslehre">Betriebswirtschaftslehre</option>
+			   <option value="Security Management">Security Management</option>
+     <option value="Technologie- und Innovationsmanagement">Technologie- und Innovationsmanagement</option>
+   <option value="Wirtschaftsinformatik">Wirtschaftsinformatik</option>
+       </select>
+
+	    <p>
+		<input type="submit" value="Senden" />
+		<input type="reset" value="Abbrechen" />
+	 </p>
+<h2>Konvertion Celsius auf Fahrenheit</h2>
+
+<p> bitte geben sie die Nummer ein:</p>
+
+<p><input id="c" onkeyup="convert('C')"> degrees Celsius</p>
+
+<p><input id="f" onkeyup="convert('F')"> degrees Fahrenheit</p> 
+
+<script>
+function convert(degree) {
+    var x;
+    if (degree == "C") {
+        x = document.getElementById("c").value * 9 / 5 + 32;
+        document.getElementById("f").value = Math.round(x);
+    } else {
+        x = (document.getElementById("f").value -32) * 5 / 9;
+        document.getElementById("c").value = Math.round(x);
+    }
+}
+</script>
+
+
+<i>	<a href ="https://www.th-brandenburg.de/hochschule/vorstellung-ueber-uns/beauftragte-und-vertretungen/vertretungen/personalrat-der-sonstigen-mitarbeiter/?S=1"> wenn die Verbindung nicht moeglich ist, wenden sie sich an einem Mitarbeiter der Th Brandenburg , in dem sie hier klicken</a> </i>
+ <p class="bodytext"><i>Postanschrift: </i><br>Postfach 2132 <br>14737 Brandenburg an der Havel<br>T +49 3381 355-0<br>F +49 3381 355-199<br><a href="javascript:linkTo_UnCryptMailto('nbjmup+jogpAui.csboefocvsh\/ef');" title="Opens internal link in current window" class="mail">info(at)th-brandenburg.de</a><br><a href="http://www.th-brandenburg.de" title="Opens internal link in current window" target="_blank" class="external-link-new-window">www.th-brandenburg.de</a></p>
+     </form>
+  </body>
+</html>
